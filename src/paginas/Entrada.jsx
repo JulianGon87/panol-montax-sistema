@@ -42,7 +42,7 @@ export default function Entrada({ sesion }) {
     })
     setEnviando(false)
     if (error) return setError(mensajeError(error))
-    setExito(`Entrada registrada: ${cantidad} ${producto.unidad} de ${producto.nombre}. Ahora hay ${producto.stock + cantidad}.`)
+    setExito(`Entrada registrada: ${cantidad} de ${producto.nombre}. Ahora hay ${producto.stock + cantidad}.`)
     setCantidad(1)
     cargarStock()
   }
@@ -50,7 +50,7 @@ export default function Entrada({ sesion }) {
   return (
     <form className="formulario" onSubmit={registrar}>
       <ElegirProducto productos={productos} valor={productoId} alCambiar={setProductoId} />
-      {producto && <p className="ayuda">Stock actual: <strong>{producto.stock}</strong> {producto.unidad}</p>}
+      {producto && <p className="ayuda">Stock actual: <strong>{producto.stock}</strong> (unidad de medida: {producto.unidad})</p>}
       <div className="campo">
         <label htmlFor="cantidad">Cantidad recibida</label>
         <Contador id="cantidad" valor={cantidad} alCambiar={setCantidad} />

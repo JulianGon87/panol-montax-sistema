@@ -44,7 +44,7 @@ export default function Salida({ sesion }) {
     e.preventDefault()
     setError('')
     setExito('')
-    if (excede) return setError(`Solo hay ${producto.stock} ${producto.unidad} disponibles. Ingresa ${producto.stock} o menos.`)
+    if (excede) return setError(`Solo hay ${producto.stock} disponibles. Ingresa ${producto.stock} o menos.`)
     setEnviando(true)
     const { error } = await supabase.from('movimiento').insert({
       producto_id: Number(productoId),
@@ -56,7 +56,7 @@ export default function Salida({ sesion }) {
     })
     setEnviando(false)
     if (error) return setError(mensajeError(error))
-    setExito(`Salida registrada: ${cantidad} ${producto.unidad} de ${producto.nombre}. Quedan ${producto.stock - cantidad}.`)
+    setExito(`Salida registrada: ${cantidad} de ${producto.nombre}. Quedan ${producto.stock - cantidad}.`)
     setCantidad(1)
     cargarStock()
   }
@@ -64,7 +64,7 @@ export default function Salida({ sesion }) {
   return (
     <form className="formulario" onSubmit={registrar}>
       <ElegirProducto productos={productos} valor={productoId} alCambiar={setProductoId} />
-      {producto && <p className="ayuda">Disponibles: <strong>{producto.stock}</strong> {producto.unidad}</p>}
+      {producto && <p className="ayuda">Disponibles: <strong>{producto.stock}</strong> (unidad de medida: {producto.unidad})</p>}
       <div className={'campo' + (excede ? ' error' : '')}>
         <label htmlFor="cantidad">Cantidad</label>
         <Contador id="cantidad" valor={cantidad} alCambiar={setCantidad} />

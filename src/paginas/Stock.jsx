@@ -44,7 +44,7 @@ export default function Stock() {
           <li key={p.producto_id}>
             <div>
               <p className="nombre">{p.nombre}</p>
-              <p className="detalle">Mínimo {p.stock_minimo} {p.unidad}</p>
+              <p className="detalle">Mínimo {p.stock_minimo}</p>
             </div>
             <div className="derecha">
               <p className="cantidad">{p.stock} <small>{p.unidad}</small></p>

@@ -51,7 +51,7 @@ export default function Inicio({ usuario }) {
               <li key={p.producto_id}>
                 <div>
                   <p className="nombre">{p.nombre}</p>
-                  <p className="detalle">Quedan {p.stock} {p.unidad} de un mínimo de {p.stock_minimo}</p>
+                  <p className="detalle">Quedan {p.stock} de un mínimo de {p.stock_minimo}</p>
                 </div>
                 <Estado valor={p.estado} />
               </li>
