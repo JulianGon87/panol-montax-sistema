@@ -9,6 +9,7 @@ const TRAZOS = {
   perfil: <><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></>,
   buscar: <><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></>,
   alerta: <><circle cx="12" cy="12" r="9" /><path d="M12 7v6M12 16.5v.5" /></>,
+  solicitudes: <><path d="M8 4h8v3H8z" /><path d="M8 5.5H5.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H16" /><path d="M8 12h8M8 16h5" /></>,
   agregar: <path d="M12 5v14M5 12h14" />,
 }
 

@@ -112,7 +112,7 @@ ul { list-style: none; }
 .pestanas span.activa { color: var(--grafito); font-weight: 600; box-shadow: inset 0 -3px 0 var(--acero); }
 
 /* Solicitud: estados del flujo */
-.flujo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 12px 8px; }
+.flujo { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 12px 8px; }
 .flujo li { display: grid; justify-items: center; gap: 6px; font-size: .8rem; color: var(--grafito-suave); text-align: center; }
 .flujo li::before { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #B9BFB8; background: var(--blanco); }
 .flujo li.hecho::before { background: var(--acero); border-color: var(--acero); }
@@ -151,7 +151,7 @@ ul { list-style: none; }
 .acceso .pie { margin-top: auto; padding: 20px 24px; color: var(--grafito-suave); font-size: .85rem; }
 
 /* Navegación: barra inferior en celular, lateral en escritorio */
-.nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--blanco); border-top: 1px solid var(--linea); display: grid; grid-template-columns: repeat(5, 1fr); }
+.nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--blanco); border-top: 1px solid var(--linea); display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
 .nav a { display: grid; justify-items: center; align-content: center; gap: 3px; min-height: 60px; font-size: .75rem; color: var(--grafito-suave); text-decoration: none; position: relative; }
 .nav a svg { width: 22px; height: 22px; }
 .nav a.activo { color: var(--acero); font-weight: 600; }
@@ -164,6 +164,7 @@ ul { list-style: none; }
 .boton.compacto { width: auto; min-height: 40px; padding: 0 14px; font-size: .95rem; }
 .pedido li { grid-template-columns: 1fr 84px; }
 .pedido input, .pedido .fijo { font: 600 1.25rem var(--fuente-cifras); width: 84px; min-height: 44px; text-align: center; border: 1.5px solid #B9BFB8; border-radius: var(--radio); }
+.pedido input[type=checkbox] { width: 22px; height: 22px; min-height: 0; vertical-align: middle; margin-right: 6px; accent-color: var(--acero); }
 .conteo li.cabecera { font-size: .82rem; color: var(--grafito-suave); font-weight: 600; padding-top: 8px; padding-bottom: 8px; background: #F7F8F6; border-radius: var(--radio) var(--radio) 0 0; }
 .dif.positiva { color: var(--acero); }
 .pista { display: block; }

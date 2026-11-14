@@ -5,8 +5,11 @@ import { Icono } from './iconos.jsx'
 // Para buscar sin importar mayúsculas ni tildes.
 export const normalizar = (texto) => (texto ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
-// Semáforo de stock: el estado lo calcula la vista stock_actual de la base.
-const ESTADOS = { 'SIN STOCK': ['sin-stock', 'Sin stock'], REPONER: ['reponer', 'Reponer'], OK: ['ok', 'OK'] }
+// Semáforo de stock (el estado lo calcula la vista stock_actual de la base) y estado de una solicitud de compra.
+const ESTADOS = {
+  'SIN STOCK': ['sin-stock', 'Sin stock'], REPONER: ['reponer', 'Reponer'], OK: ['ok', 'OK'],
+  pendiente: ['pendiente', 'Pendiente'], aprobada: ['ok', 'Aprobada'], rechazada: ['sin-stock', 'Rechazada'], comprada: ['ok', 'Comprada'],
+}
 
 export function Estado({ valor }) {
   const [clase, texto] = ESTADOS[valor] ?? ['neutro', valor]

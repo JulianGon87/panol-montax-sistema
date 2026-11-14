@@ -19,6 +19,8 @@ export function mensajeError(error) {
   if (!error) return ''
   const texto = `${error.message ?? ''} ${error.details ?? ''}`
   if (texto.includes('Stock insuficiente')) return 'No hay stock suficiente para esa cantidad. Revisa el stock disponible.'
+  if (texto.includes('Solo se pueden pedir')) return 'Solo se pueden pedir productos sin stock o por reponer. Actualiza la pantalla.'
+  if (texto.includes('al menos un producto')) return 'Elige al menos un producto para la solicitud.'
   if (texto.includes('Solo Gerencia')) return 'Solo Gerencia puede cambiar el perfil o el estado de una cuenta.'
   if (texto.includes('Invalid login credentials')) return 'Correo o contraseña incorrectos.'
   if (texto.includes('should be different')) return 'La nueva contraseña debe ser distinta de la actual.'
