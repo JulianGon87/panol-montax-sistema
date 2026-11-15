@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../supabase.js'
 import { mensajeError } from '../errores.js'
 import { Icono } from '../iconos.jsx'
-import { Avisos, Estado } from '../comun.jsx'
+import { Avisos, Estado, plural } from '../comun.jsx'
 
 const fechaHora = (f) => new Date(f).toLocaleString('es-CL', { dateStyle: 'long', timeStyle: 'short' })
 
@@ -48,7 +48,7 @@ function Lista({ esGerencia, abrir, nueva }) {
             <li key={s.id}>
               <div>
                 <p className="nombre">Solicitud N.º {s.id}</p>
-                <p className="detalle">{fechaHora(s.fecha_creacion)}, {s.detalle_solicitud[0].count} productos</p>
+                <p className="detalle">{fechaHora(s.fecha_creacion)}, {plural(s.detalle_solicitud[0].count, 'producto', 'productos')}</p>
               </div>
               <div className="derecha">
                 <Estado valor={s.estado} />

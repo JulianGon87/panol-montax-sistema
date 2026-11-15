@@ -10,6 +10,8 @@ const TRAZOS = {
   buscar: <><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></>,
   alerta: <><circle cx="12" cy="12" r="9" /><path d="M12 7v6M12 16.5v.5" /></>,
   solicitudes: <><path d="M8 4h8v3H8z" /><path d="M8 5.5H5.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H16" /><path d="M8 12h8M8 16h5" /></>,
+  conteo: <><path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17" /><path d="M12 6.5h8M12 12.5h8M12 18.5h8" /></>,
+  mas: <><circle cx="5" cy="12" r="1.6" /><circle cx="12" cy="12" r="1.6" /><circle cx="19" cy="12" r="1.6" /></>,
   agregar: <path d="M12 5v14M5 12h14" />,
 }
 

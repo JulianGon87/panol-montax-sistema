@@ -2,6 +2,9 @@
 import { useState } from 'react'
 import { Icono } from './iconos.jsx'
 
+// "1 producto", "2 productos".
+export const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`
+
 // Para buscar sin importar mayúsculas ni tildes.
 export const normalizar = (texto) => (texto ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 

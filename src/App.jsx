@@ -12,27 +12,31 @@ import Salida from './paginas/Salida.jsx'
 import Entrada from './paginas/Entrada.jsx'
 import Stock from './paginas/Stock.jsx'
 import Solicitudes from './paginas/Solicitudes.jsx'
+import Conteo from './paginas/Conteo.jsx'
+import Mas from './paginas/Mas.jsx'
 import Catalogo from './paginas/Catalogo.jsx'
 import Usuarios from './paginas/Usuarios.jsx'
 import Perfil from './paginas/Perfil.jsx'
 
-// Pantallas de cada perfil: ruta, título, ícono y componente.
+// Pantallas de cada perfil: ruta, título, ícono, componente y, si es de menor uso, "mas" (en el celular van
+// dentro de "Más"; en el computador el menú lateral las muestra todas).
 const MENU = {
   bodega: [
     ['inicio', 'Inicio', 'inicio', Inicio],
     ['salida', 'Salida', 'salida', Salida],
-    ['entrada', 'Entrada', 'entrada', Entrada],
+    ['entrada', 'Entrada', 'entrada', Entrada, 'mas'],
     ['stock', 'Stock', 'stock', Stock],
     ['solicitudes', 'Solicitudes', 'solicitudes', Solicitudes],
-    ['perfil', 'Mi perfil', 'perfil', Perfil],
+    ['conteo', 'Conteo', 'conteo', Conteo, 'mas'],
+    ['perfil', 'Mi perfil', 'perfil', Perfil, 'mas'],
   ],
   gerencia: [
     ['inicio', 'Inicio', 'inicio', Inicio],
     ['stock', 'Stock', 'stock', Stock],
     ['solicitudes', 'Solicitudes', 'solicitudes', Solicitudes],
-    ['catalogo', 'Catálogo', 'catalogo', Catalogo],
-    ['usuarios', 'Usuarios', 'usuarios', Usuarios],
-    ['perfil', 'Mi perfil', 'perfil', Perfil],
+    ['catalogo', 'Catálogo', 'catalogo', Catalogo, 'mas'],
+    ['usuarios', 'Usuarios', 'usuarios', Usuarios, 'mas'],
+    ['perfil', 'Mi perfil', 'perfil', Perfil, 'mas'],
   ],
 }
 
@@ -83,8 +87,10 @@ export default function App() {
   }
 
   const menu = MENU[usuario.rol.nombre]
-  const actual = menu.find(([r]) => r === ruta) ?? menu[0]
+  const opcionesMas = menu.filter((o) => o[4])
+  const actual = ruta === 'mas' ? ['mas', 'Más', 'mas', Mas] : (menu.find(([r]) => r === ruta) ?? menu[0])
   const [rutaActual, titulo, , Pagina] = actual
+  const enMas = rutaActual === 'mas' || opcionesMas.some(([r]) => r === rutaActual)
   const iniciales = usuario.nombre.split(/[\s@.]+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase()
 
   return (
@@ -95,14 +101,15 @@ export default function App() {
         <a className="iniciales" href="#/perfil" aria-label="Mi perfil">{iniciales}</a>
       </header>
       <nav className="nav" aria-label="Navegación principal">
-        {menu.map(([r, texto, icono]) => (
-          <a key={r} href={'#/' + r} className={r === rutaActual ? 'activo' : ''}>
+        {menu.map(([r, texto, icono, , mas]) => (
+          <a key={r} href={'#/' + r} className={(r === rutaActual ? 'activo' : '') + (mas ? ' solo-escritorio' : '')}>
             <Icono nombre={icono} /><span>{texto}</span>
           </a>
         ))}
+        <a href="#/mas" className={'solo-celular' + (enMas ? ' activo' : '')}><Icono nombre="mas" /><span>Más</span></a>
       </nav>
       <main className="contenido">
-        <Pagina key={rutaActual} usuario={usuario} sesion={sesion} recargarUsuario={() => setVersion((v) => v + 1)} />
+        <Pagina key={rutaActual} usuario={usuario} sesion={sesion} opciones={opcionesMas} recargarUsuario={() => setVersion((v) => v + 1)} />
       </main>
     </div>
   )
