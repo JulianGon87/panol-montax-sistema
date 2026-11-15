@@ -13,6 +13,8 @@ import Entrada from './paginas/Entrada.jsx'
 import Stock from './paginas/Stock.jsx'
 import Solicitudes from './paginas/Solicitudes.jsx'
 import Conteo from './paginas/Conteo.jsx'
+import Historial from './paginas/Historial.jsx'
+import Reportes from './paginas/Reportes.jsx'
 import Mas from './paginas/Mas.jsx'
 import Catalogo from './paginas/Catalogo.jsx'
 import Usuarios from './paginas/Usuarios.jsx'
@@ -28,12 +30,15 @@ const MENU = {
     ['stock', 'Stock', 'stock', Stock],
     ['solicitudes', 'Solicitudes', 'solicitudes', Solicitudes],
     ['conteo', 'Conteo', 'conteo', Conteo, 'mas'],
+    ['historial', 'Historial', 'historial', Historial, 'mas'],
     ['perfil', 'Mi perfil', 'perfil', Perfil, 'mas'],
   ],
   gerencia: [
     ['inicio', 'Inicio', 'inicio', Inicio],
     ['stock', 'Stock', 'stock', Stock],
     ['solicitudes', 'Solicitudes', 'solicitudes', Solicitudes],
+    ['reportes', 'Reportes', 'reportes', Reportes],
+    ['historial', 'Historial', 'historial', Historial, 'mas'],
     ['catalogo', 'Catálogo', 'catalogo', Catalogo, 'mas'],
     ['usuarios', 'Usuarios', 'usuarios', Usuarios, 'mas'],
     ['perfil', 'Mi perfil', 'perfil', Perfil, 'mas'],
