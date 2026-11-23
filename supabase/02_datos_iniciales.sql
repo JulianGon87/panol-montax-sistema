@@ -1,0 +1,295 @@
+-- ============================================================================
+-- Pañol MONTAX - Carga inicial: catálogo, áreas y stock de partida
+-- Fuente: planilla INVENTARIO PAÑOL MONTAX.xlsx, pestaña "INV 02-11" (stock al 2-11-2026).
+-- Se ejecuta después de 01_crear_bd.sql y de crear y activar la cuenta del gerente.
+-- El stock inicial entra como un conteo físico con un ajuste por producto, igual que
+-- cualquier conteo posterior; el historial del Form no se migra.
+-- ============================================================================
+
+insert into categoria (nombre) values
+  ('EPP'),
+  ('Discos y brocas'),
+  ('Soldadura'),
+  ('Pinturas y químicos'),
+  ('Fijaciones'),
+  ('Herramientas'),
+  ('Otros');
+
+insert into area (nombre) values
+  ('Carpintería'), ('Soldadura'), ('Pintura'), ('Recepción'),
+  ('Operadores de grúas'), ('Oficina'), ('Otro');
+
+-- Productos. stock_minimo viene de la hoja PARAMETROS y de la revisión con la Gerencia de Logística (T16);
+-- quedan en 0 solo las 5 herramientas más RUEDA 8" y TUERCA HEXAGONAL 3 PUNTAS.
+insert into producto (categoria_id, nombre, unidad, stock_minimo)
+select c.id, v.nombre, v.unidad, v.stock_minimo
+from (values
+  ('Pinturas y químicos', 'ACEITE COMPRESOR', 'unidad', 1),
+  ('Pinturas y químicos', 'ACEITE DE CORTE', 'unidad', 2),
+  ('Pinturas y químicos', 'ADHESIVO MULTI USO WURT', 'unidad', 12),
+  ('Soldadura', 'ALAMBRE SOLDADURA 0,8 MM (CAJA)', 'caja', 1),
+  ('Soldadura', 'ALAMBRE SOLDADURA 1,2 MM (CAJA)', 'caja', 1),
+  ('Pinturas y químicos', 'ANTICORROSIVO', 'unidad', 6),
+  ('Pinturas y químicos', 'ANTICORROSIVO SECADO RAPIDO GRIS', 'unidad', 5),
+  ('Pinturas y químicos', 'ANTIOXIDO (GALON)', 'galón', 5),
+  ('EPP', 'ANTIPARRA COLOR', 'unidad', 12),
+  ('EPP', 'ANTIPARRA TRANSPARENTE', 'unidad', 12),
+  ('EPP', 'BOTAS DE AGUA TALLA 44', 'unidad', 1),
+  ('EPP', 'BOTAS DE AGUA TALLA 45', 'unidad', 1),
+  ('Discos y brocas', 'BROCA 4.2MM', 'unidad', 2),
+  ('Discos y brocas', 'BROCA 4.5MM', 'unidad', 5),
+  ('Discos y brocas', 'BROCA 5MM', 'unidad', 2),
+  ('Discos y brocas', 'BROCA DE MADERA 5MM', 'unidad', 5),
+  ('Pinturas y químicos', 'BROCHA', 'unidad', 6),
+  ('Otros', 'CABEZAL', 'unidad', 100),
+  ('EPP', 'CABO VIDA Y CINTA PLANA', 'unidad', 1),
+  ('Fijaciones', 'CANCAMOS', 'unidad', 200),
+  ('EPP', 'CASCOS', 'unidad', 200),
+  ('Fijaciones', 'CERROJO PARA FRAMI', 'unidad', 100),
+  ('EPP', 'CHAQUETA AMARILLA', 'unidad', 2),
+  ('Pinturas y químicos', 'COLAFRIA', 'unidad', 1),
+  ('Fijaciones', 'CONECTOR APLOMADOR', 'unidad', 100),
+  ('EPP', 'CUBRE NUCA', 'unidad', 10),
+  ('Fijaciones', 'CUÑA', 'unidad', 100),
+  ('Pinturas y químicos', 'DILUYENTE DUCO 18,9 LT', 'unidad', 1),
+  ('Pinturas y químicos', 'DILUYENTE SINTETICO (TINETA)', 'tineta', 3),
+  ('Discos y brocas', 'DISCO 14"', 'unidad', 2),
+  ('Discos y brocas', 'DISCO CORTE 12"', 'unidad', 8),
+  ('Discos y brocas', 'DISCO CORTE 4 1/2', 'unidad', 24),
+  ('Discos y brocas', 'DISCO CORTE 7"', 'unidad', 12),
+  ('Discos y brocas', 'DISCO CORTE 9"', 'unidad', 12),
+  ('Discos y brocas', 'DISCO DE CORTE FINO 4 1/2', 'unidad', 24),
+  ('Discos y brocas', 'DISCO DESBASTE 4 1/2''''', 'unidad', 5),
+  ('Discos y brocas', 'DISCO DESBASTE 7"', 'unidad', 5),
+  ('Discos y brocas', 'DISCO FLAP', 'unidad', 10),
+  ('Discos y brocas', 'DISCO LIJA 4"', 'unidad', 1),
+  ('Discos y brocas', 'DISCO 4 1/2 LIJA CON VELCRO (MADERA)', 'unidad', 5),
+  ('Soldadura', 'ELECTRODOS SOLDADURA (KILO)', 'kilo', 2),
+  ('Fijaciones', 'FIJACION GALVANIZADO PARA REMACHE CON NERVIO', 'unidad', 50),
+  ('Otros', 'FILM (ROLLO)', 'rollo', 12),
+  ('EPP', 'FILTRO PARA MASCARILLA', 'unidad', 6),
+  ('Discos y brocas', 'GRATA 3"', 'unidad', 6),
+  ('Discos y brocas', 'GRATA 4''''', 'unidad', 12),
+  ('Discos y brocas', 'GRATA 5"', 'unidad', 12),
+  ('Discos y brocas', 'GRATA BRONCE 5"', 'unidad', 2),
+  ('Discos y brocas', 'GRATA HILO 0,3 4''''', 'unidad', 1),
+  ('EPP', 'GUANTE ANTIGOLPE', 'unidad', 6),
+  ('EPP', 'GUANTE AZUL SOLDADOR', 'unidad', 4),
+  ('EPP', 'GUANTE BLANCO SOLDADOR', 'unidad', 4),
+  ('EPP', 'GUANTE CABRETILLA', 'unidad', 24),
+  ('EPP', 'GUANTE DE TELA', 'unidad', 1),
+  ('EPP', 'GUANTES GOMA (VERDE)', 'unidad', 6),
+  ('EPP', 'LENTE OSCURO', 'unidad', 12),
+  ('EPP', 'MASCARILLAS', 'unidad', 6),
+  ('Pinturas y químicos', 'MASILLA', 'unidad', 12),
+  ('Otros', 'PAÑOS PARA LIMPIEZA (PACK)', 'pack', 1),
+  ('Fijaciones', 'PASADOR DE CUÑA', 'unidad', 1000),
+  ('Fijaciones', 'PASADORES', 'unidad', 100),
+  ('Fijaciones', 'PERNOS RODAPIE', 'unidad', 200),
+  ('Fijaciones', 'PERROS PARA ZUNCHO', 'unidad', 2),
+  ('Discos y brocas', 'PIEDRA', 'unidad', 2),
+  ('Pinturas y químicos', 'PINTURA ALTO TRAFICO', 'unidad', 1),
+  ('Pinturas y químicos', 'PINTURA ALUMINIO TINETA', 'unidad', 3),
+  ('Pinturas y químicos', 'PINTURA AZUL 5005 TINETA', 'unidad', 3),
+  ('Pinturas y químicos', 'PINTURA ROJA 3020 (TARRO)', 'tarro', 4),
+  ('Pinturas y químicos', 'PINTURA GRIS 7040 (TARRO)', 'tarro', 12),
+  ('Otros', 'PROTECTOR CAP 42 FIERRO 8 AL 16', 'unidad', 1000),
+  ('EPP', 'PROTECTOR SOLAR (1LT)', 'unidad', 2),
+  ('Fijaciones', 'REMACHE 4,8X15', 'unidad', 100),
+  ('Fijaciones', 'REMACHE 4,8X20', 'unidad', 100),
+  ('Pinturas y químicos', 'SELLADOR HIBRIDO 600 ML (PANELES)', 'unidad', 24),
+  ('Discos y brocas', 'SIERRA DE CORTE', 'unidad', 2),
+  ('EPP', 'SOPORTE VISOR PARA CASCO', 'unidad', 6),
+  ('Pinturas y químicos', 'SPRAY GRIS', 'unidad', 24),
+  ('Pinturas y químicos', 'SPRAY ROJO', 'unidad', 12),
+  ('EPP', 'TAPON OIDO', 'unidad', 100),
+  ('Fijaciones', 'TARUGO', 'unidad', 200),
+  ('Soldadura', 'TISA SOLDADOR', 'unidad', 5),
+  ('EPP', 'TRAJE DE AGUA (XL)', 'unidad', 2),
+  ('Soldadura', 'VIDRIO BLANCO SOLDADOR', 'unidad', 6),
+  ('Soldadura', 'VIDRIO NEGRO SOLDADOR', 'unidad', 6),
+  ('EPP', 'VISOR PARA CASCO', 'unidad', 6),
+  ('Pinturas y químicos', 'W40 WURT', 'unidad', 2),
+  ('EPP', 'ZAPATOS DE SEGURIDAD', 'unidad', 6),
+  ('Fijaciones', 'ZUNCHO METALICO (ROLLO)', 'rollo', 2),
+  ('Fijaciones', 'ZUNCHO PLASTICO (ROLLO)', 'rollo', 2),
+  ('Herramientas', 'ESMERIL 9MM MAKITA', 'unidad', 0),
+  ('Herramientas', 'PISTOLA INDURA ALTA PRESION', 'unidad', 0),
+  ('Herramientas', 'BARRETILLA (DIABLO)', 'unidad', 0),
+  ('Herramientas', 'REMACHADORA NEUMATICA', 'unidad', 0),
+  ('Herramientas', 'LIJADORA NEUMATICA 6"', 'unidad', 0),
+  ('Fijaciones', 'REMACHE 4,8X25', 'unidad', 100),
+  ('Pinturas y químicos', 'ACEITE HERRAMIENTA NEUMATICA WURTH 1L.', 'unidad', 1),
+  ('Discos y brocas', 'BROCA 5MM WURTH', 'unidad', 2),
+  ('Fijaciones', 'REMACHE 4,8X24', 'unidad', 100),
+  ('Fijaciones', 'REMACHE 5X30', 'unidad', 100),
+  ('Fijaciones', 'TORNILLO 14"', 'unidad', 50),
+  ('Soldadura', 'BOQUILLA SOLDADOR', 'unidad', 5),
+  ('Soldadura', 'BOQUILLA CONTACTO MIG 0,45', 'unidad', 5),
+  ('Soldadura', 'BOQUILLA CONTACTO MIG 0,30', 'unidad', 5),
+  ('EPP', 'GUANTE GOMA AZUL', 'unidad', 5),
+  ('EPP', 'PROTECTOR FACIAL TRANSPARENTE', 'unidad', 5),
+  ('Fijaciones', 'SELLO PUNTEADO GALVANIZADO (PERROS ZUNCHO)', 'unidad', 10000),
+  ('Pinturas y químicos', 'PINTURA SPRAY ALUMINIO', 'unidad', 5),
+  ('Pinturas y químicos', 'PINTURA SPRAY NEGRO', 'unidad', 5),
+  ('Discos y brocas', 'DISCO DE CORTE 46', 'unidad', 5),
+  ('Fijaciones', 'SELLO PUNTEADO 10 KG', 'unidad', 1),
+  ('EPP', 'COLETO', 'unidad', 1),
+  ('EPP', 'CHAQUETA SOLDADOR XL', 'unidad', 1),
+  ('EPP', 'PANTALON MEZCLILLA SOLDADOR TALLA 48', 'unidad', 1),
+  ('EPP', 'GORRO SOLDADOR', 'unidad', 1),
+  ('Fijaciones', 'RUEDA 8"', 'unidad', 0),
+  ('Fijaciones', 'TUERCA HEXAGONAL 3 PUNTAS', 'unidad', 0)
+) as v (categoria, nombre, unidad, stock_minimo)
+join categoria c on c.nombre = v.categoria;
+
+-- Stock inicial: conteo físico del 2-11-2026 registrado a nombre del gerente.
+do $$
+declare
+  v_usuario uuid;
+  v_conteo  integer;
+begin
+  select u.id into v_usuario
+    from usuario u join rol r on r.id = u.rol_id
+   where r.nombre = 'gerencia' and u.activo
+   limit 1;
+  if v_usuario is null then
+    raise exception 'Falta crear y activar la cuenta del gerente antes de cargar el stock inicial';
+  end if;
+
+  insert into conteo_fisico (usuario_id, fecha, observacion)
+  values (v_usuario, '2026-11-02', 'Conteo físico inicial (planilla INV 02-11)')
+  returning id into v_conteo;
+
+  insert into detalle_conteo (conteo_id, producto_id, cantidad_sistema, cantidad_contada)
+  select v_conteo, p.id, 0, v.contado
+  from (values
+    ('ACEITE COMPRESOR', 0),
+    ('ACEITE DE CORTE', 5),
+    ('ADHESIVO MULTI USO WURT', 0),
+    ('ALAMBRE SOLDADURA 0,8 MM (CAJA)', 2),
+    ('ALAMBRE SOLDADURA 1,2 MM (CAJA)', 5),
+    ('ANTICORROSIVO', 13),
+    ('ANTICORROSIVO SECADO RAPIDO GRIS', 0),
+    ('ANTIOXIDO (GALON)', 1),
+    ('ANTIPARRA COLOR', 19),
+    ('ANTIPARRA TRANSPARENTE', 11),
+    ('BOTAS DE AGUA TALLA 44', 2),
+    ('BOTAS DE AGUA TALLA 45', 2),
+    ('BROCA 4.2MM', 10),
+    ('BROCA 4.5MM', 20),
+    ('BROCA 5MM', 40),
+    ('BROCA DE MADERA 5MM', 1),
+    ('BROCHA', 0),
+    ('CABEZAL', 0),
+    ('CABO VIDA Y CINTA PLANA', 0),
+    ('CANCAMOS', 10302),
+    ('CASCOS', 0),
+    ('CERROJO PARA FRAMI', 0),
+    ('CHAQUETA AMARILLA', 0),
+    ('COLAFRIA', 0),
+    ('CONECTOR APLOMADOR', 0),
+    ('CUBRE NUCA', 16),
+    ('CUÑA', 0),
+    ('DILUYENTE DUCO 18,9 LT', 1),
+    ('DILUYENTE SINTETICO (TINETA)', 2),
+    ('DISCO 14"', 0),
+    ('DISCO CORTE 12"', 0),
+    ('DISCO CORTE 4 1/2', 65),
+    ('DISCO CORTE 7"', 50),
+    ('DISCO CORTE 9"', 120),
+    ('DISCO DE CORTE FINO 4 1/2', 0),
+    ('DISCO DESBASTE 4 1/2''''', 50),
+    ('DISCO DESBASTE 7"', 80),
+    ('DISCO FLAP', 0),
+    ('DISCO LIJA 4"', 0),
+    ('DISCO 4 1/2 LIJA CON VELCRO (MADERA)', 100),
+    ('ELECTRODOS SOLDADURA (KILO)', 10),
+    ('FIJACION GALVANIZADO PARA REMACHE CON NERVIO', 80),
+    ('FILM (ROLLO)', 4),
+    ('FILTRO PARA MASCARILLA', 16),
+    ('GRATA 3"', 4),
+    ('GRATA 4''''', 5),
+    ('GRATA 5"', 13),
+    ('GRATA BRONCE 5"', 2),
+    ('GRATA HILO 0,3 4''''', 0),
+    ('GUANTE ANTIGOLPE', 3),
+    ('GUANTE AZUL SOLDADOR', 2),
+    ('GUANTE BLANCO SOLDADOR', 4),
+    ('GUANTE CABRETILLA', 387),
+    ('GUANTE DE TELA', 0),
+    ('GUANTES GOMA (VERDE)', 14),
+    ('LENTE OSCURO', 3),
+    ('MASCARILLAS', 8),
+    ('MASILLA', 5),
+    ('PAÑOS PARA LIMPIEZA (PACK)', 3),
+    ('PASADOR DE CUÑA', 0),
+    ('PASADORES', 5000),
+    ('PERNOS RODAPIE', 0),
+    ('PERROS PARA ZUNCHO', 0),
+    ('PIEDRA', 0),
+    ('PINTURA ALTO TRAFICO', 0),
+    ('PINTURA ALUMINIO TINETA', 0),
+    ('PINTURA AZUL 5005 TINETA', 2),
+    ('PINTURA ROJA 3020 (TARRO)', 42),
+    ('PINTURA GRIS 7040 (TARRO)', 7),
+    ('PROTECTOR CAP 42 FIERRO 8 AL 16', 5000),
+    ('PROTECTOR SOLAR (1LT)', 3),
+    ('REMACHE 4,8X15', 100),
+    ('REMACHE 4,8X20', 800),
+    ('SELLADOR HIBRIDO 600 ML (PANELES)', 44),
+    ('SIERRA DE CORTE', 3),
+    ('SOPORTE VISOR PARA CASCO', 15),
+    ('SPRAY GRIS', 0),
+    ('SPRAY ROJO', 9),
+    ('TAPON OIDO', 150),
+    ('TARUGO', 8632),
+    ('TISA SOLDADOR', 11),
+    ('TRAJE DE AGUA (XL)', 3),
+    ('VIDRIO BLANCO SOLDADOR', 30),
+    ('VIDRIO NEGRO SOLDADOR', 26),
+    ('VISOR PARA CASCO', 2),
+    ('W40 WURT', 3),
+    ('ZAPATOS DE SEGURIDAD', 6),
+    ('ZUNCHO METALICO (ROLLO)', 14),
+    ('ZUNCHO PLASTICO (ROLLO)', 30),
+    ('ESMERIL 9MM MAKITA', 1),
+    ('PISTOLA INDURA ALTA PRESION', 1),
+    ('BARRETILLA (DIABLO)', 2),
+    ('REMACHADORA NEUMATICA', 1),
+    ('LIJADORA NEUMATICA 6"', 2),
+    ('REMACHE 4,8X25', 50),
+    ('ACEITE HERRAMIENTA NEUMATICA WURTH 1L.', 4),
+    ('BROCA 5MM WURTH', 30),
+    ('REMACHE 4,8X24', 250),
+    ('REMACHE 5X30', 2250),
+    ('TORNILLO 14"', 100),
+    ('BOQUILLA SOLDADOR', 7),
+    ('BOQUILLA CONTACTO MIG 0,45', 18),
+    ('BOQUILLA CONTACTO MIG 0,30', 24),
+    ('GUANTE GOMA AZUL', 9),
+    ('PROTECTOR FACIAL TRANSPARENTE', 2),
+    ('SELLO PUNTEADO GALVANIZADO (PERROS ZUNCHO)', 30000),
+    ('PINTURA SPRAY ALUMINIO', 48),
+    ('PINTURA SPRAY NEGRO', 17),
+    ('DISCO DE CORTE 46', 1),
+    ('SELLO PUNTEADO 10 KG', 3),
+    ('COLETO', 4),
+    ('CHAQUETA SOLDADOR XL', 1),
+    ('PANTALON MEZCLILLA SOLDADOR TALLA 48', 2),
+    ('GORRO SOLDADOR', 1),
+    ('RUEDA 8"', 16),
+    ('TUERCA HEXAGONAL 3 PUNTAS', 500)
+  ) as v (nombre, contado)
+  join producto p on p.nombre = v.nombre;
+
+  if (select count(*) from detalle_conteo where conteo_id = v_conteo) <> 116 then
+    raise exception 'El conteo inicial debía cargar 116 productos';
+  end if;
+
+  -- Un ajuste por cada diferencia (los productos contados en 0 no generan movimiento).
+  insert into movimiento (producto_id, tipo, cantidad, fecha, usuario_id, conteo_id)
+  select producto_id, 'ajuste', cantidad_contada - cantidad_sistema, '2026-11-02', v_usuario, conteo_id
+    from detalle_conteo
+   where conteo_id = v_conteo and cantidad_contada <> cantidad_sistema;
+end $$;
